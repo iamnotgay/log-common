@@ -1,0 +1,35 @@
+<configuration>
+
+    <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,,,, -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%p|%X{log.seq}|%X{host}|%X{user}|%d{yyyy-MM-dd HH:mm:ss}|%X{op.module}|%X{op.infoId}|%X{tread.id}|%m|%X{op.result}|%X{op.exceptionMsg}|%t|%X{class}|%X{method}|%X{line}-line %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="logfile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Prudent>true</Prudent>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>logs/access.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!-- keep 60 days worth of history -->
+            <MaxHistory>60</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %p|%X{log.seq}|%X{host}|%X{user}|%d{yyyy-MM-dd HH:mm:ss}|%X{op.module}|%X{op.infoId}|%X{tread.id}|%m|%X{op.result}|%X{op.exceptionMsg}|%t|%X{class}|%X{method}|%X{line}-line %n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <logger name="com.ink" level="info">
+        <appender-ref ref="logfile" />
+    </logger>
+
+</configuration>
